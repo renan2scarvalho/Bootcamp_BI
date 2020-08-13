@@ -1,5 +1,6 @@
 # Bootcamp_BI
-Bootcamp "Desenvolvedor BI" oferecido pelo Instituto de Gestão e Tecnologia da Informação (IGTI). 
+Bootcamp "Desenvolvedor BI" oferecido pelo Instituto de Gestão e Tecnologia da Informação (IGTI).
+
 O Bootcamp é segmentador em:
 1. Introdução ao BI
 2. Fundamentos de BI
