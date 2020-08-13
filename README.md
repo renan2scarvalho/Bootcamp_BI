@@ -3,7 +3,7 @@ Bootcamp "Desenvolvedor BI" oferecido pelo Instituto de Gestão e Tecnologia da 
 
 O Bootcamp é segmentador em:
 1. Introdução ao BI
-2. Fundamentos de BI
+2. [Fundamentos de BI](https://github.com/renan2scarvalho/Bootcamp_BI/tree/master/M%C3%B3dulo%202)
 3. Ferramentas de BI
 4. Aplicações de ETL
 5. Relatórios e Dashboards
