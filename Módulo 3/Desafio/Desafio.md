@@ -114,13 +114,32 @@ Agora criaremos a Dimensão Produto. A figura a seguir apresenta o diagrama comm
 
 ![dim_prod](https://user-images.githubusercontent.com/63553829/91595087-582d6880-e939-11ea-81fd-7f794b7ed53e.png)
 
-Como anteriormente, ordenamos as tabelas de entrada "Produto" e "Categoria" em função do atributo *iDCategoria* (lembre-se, valor em comum), e aplicamos um *LEFT OUTER Merge Join*. Após, aplicamos um bloco *If field value is null*, que trabalha com valores nulos. A tabela "Categoria" possui valores nulos, que continuaram após
+Como anteriormente, ordenamos as tabelas de entrada "Produto" e "Categoria" em função do atributo *iDCategoria* (lembre-se, valor em comum), e aplicamos um *LEFT OUTER Merge Join*. A tabela "Categoria" possui valores nulos, que continuaram após o *Merge*:
 
 ![dim_prod2](https://user-images.githubusercontent.com/63553829/91595876-a0995600-e93a-11ea-87d3-7ca78a714c6c.png)
 
-
+Nesse caso, aplicamos então o bloco *If field value is null*, que trabalha com valores nulos, substituindo-os por "ND" (Não Disponível):
 
 ![dim_prod3](https://user-images.githubusercontent.com/63553829/91596106-071e7400-e93b-11ea-9d6b-b418f3f54100.png)
+
+Por fim, removemos o *iDCategoria* (duplicado), e criamos a Dimensão Produto, como feito na Dimensão Cliente. Lembre-se que nesse passo é necessário preencher os campos de chave, chave técnica (SK), campos da tabela, data, e criar a tabela no MySQL. Após feitos estes passos, caso todos estejam corretos, temos a mensagem de êxito da **transformação**:
+
+![dim_prod4](https://user-images.githubusercontent.com/63553829/91601976-eb1dd100-e940-11ea-967b-bfb6f7640969.png)
+
+
+## 3. Dimensão Funcionário
+
+Neste terceiro passo, criaremos a Dimensão Funcionário, como apresentado no diagrama a seguir. Neste caso, apenas ordenamos o atributo *matFuncionario*, e aplicamos a **transformação**, novamente preenchendo os campos necessários no bloco *Dimension Lookup/Update*:
+
+![dim_func](https://user-images.githubusercontent.com/63553829/91602657-17861d00-e942-11ea-91c3-d23a300b4226.png)
+
+
+## 4. Dimensão Data
+
+Todo modelo dimensional deve ter uma Dimensão Data. Aqui, criaremos esta dimensão através de alguns blocos, que ao final, ficará desta maneira:
+
+![dim_data](https://user-images.githubusercontent.com/63553829/91602822-59af5e80-e942-11ea-9ef9-2aa8510ad4c0.png)
+
 
 
 
