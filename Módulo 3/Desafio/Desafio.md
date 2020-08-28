@@ -82,7 +82,7 @@ A figura a seguir apresenta a visão completa da Dimensão Cliente, e alguns blo
 
 Iniciamos com um *Sort rows"*, o qual realiza a ordenação da tabela em função de um atributo, normalmente a chave primária (PK). Entretanto, no caso das tabelas "Regiao" e "Territorio", como iremos aplicar um *Merge* em ambas, elas são ordenadas em função das chaves em comum. Após, aplicamos um *Merge join* para fundir duas tabelas em função de uma PK. Aqui, realizamos um *LEFT OUTER Join*, isso porque a tabela "Regiao" possui mais IDs que a tabela "Territorio":
 
-![dim_cl3](https://user-images.githubusercontent.com/63553829/91592054-4eedcd00-e934-11ea-84a1-a039fa1f40c5.png)
+![dim_cl32](https://user-images.githubusercontent.com/63553829/91592054-4eedcd00-e934-11ea-84a1-a039fa1f40c5.png)
 
 A seguir, aplicamos um *Select values* para removemos o atributo *iDTerritorio*, uma vez que após o *Merge* temos dois IDs para o atributo Territorio:
 
