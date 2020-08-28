@@ -169,10 +169,27 @@ Após tanto trabalho, estamos finalizando nosso processo de ETL e criação do D
 
 Após inserir a tabela "Vendas" da *staging area*, utilizamos blocos *Database lookpu* para buscar as dimensões e adicioná-las à mesma. Aqui utilizamos o join entre PK das dimensões e a tabela fato como lookup, mas retornaremos as SK das dimensões na fato:
 
-![fato2](https://user-images.githubusercontent.com/63553829/91608845-ac8e1380-e94c-11ea-8823-b94af5ad3d6c.png)
-![fato3](https://user-images.githubusercontent.com/63553829/91608946-d810fe00-e94c-11ea-811a-5cf29953aa4b.png)
+![fato2](https://user-images.githubusercontent.com/63553829/91609156-43f36680-e94d-11ea-8357-44d1919a49a7.png)
+![fato3](https://user-images.githubusercontent.com/63553829/91609236-6ab19d00-e94d-11ea-86f2-621ceb944329.png)
 
+Agora, removemos os atributos *iDProduto, idClientes, matFuncionario*, já que temos as SK das dimensões para tal finalidade. Entretanto, queremos que as SK sejam PKs na tabela fato. Portanto, antes disso, devemos substituir valores faltantes nestas chaves (no caso, *sk_funcionario*), substituindo por um valor arbitrátio, nesse caso, -1:
 
+![fato4](https://user-images.githubusercontent.com/63553829/91609942-b87ad500-e94e-11ea-8ad6-bb8b477f1675.png)
 
+Após realizado tal passo, executamos o seguinte código no MySQL:
 
+```javascript
+ALTER TABLE fato_vendas
+ADD PRIMARY KEY (sk_produto,sk_cliente,sk_funcionario,sk_data);
+```
 
+Ao executarmos o processo de **transformação e carga**, recebemos a seguinte mensagem:
+
+![fato5](https://user-images.githubusercontent.com/63553829/91610203-2aebb500-e94f-11ea-9e5c-aa60a3fa6c9b.png)
+
+Enfim, **terminamos nosso processo de ETL e criação do DW com sucesso!**. A fim de analisar se o processo todo obteve êxito, executamos a seguinte query no MySQL:
+
+![fato6](https://user-images.githubusercontent.com/63553829/91610626-fd533b80-e94f-11ea-8580-533e76ab1097.png)
+
+Podemos notar que o processo foi completado com sucesso! Ao final da tabela notamos os valores -1 na SK *sk_funcionario*, como esperado.
+O processo de ETL, como vimos, é trabalhoso, e deve ser realizado com cuidado. Aqui aplicamos a extração de acordo com as extensões dos arquivos, mas o ideal seria realizar cada processo de extração, transformação e carga individualmente. Ademais, existe a possibilidade de automatização deste processo através dos *Jobs* do Pentaho. Entretanto, tais processos, ainda que mais simples, não foram abordados nesse desafio.
