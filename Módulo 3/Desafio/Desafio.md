@@ -68,3 +68,40 @@ SELECT * FROM [TABLE]
 
 
 ## 2. Transformação
+
+As transformações serão realizadas em cada dimensão separadamente. O primeiro passo é inserir as tabelas da *staging area* atraves de um *Table input* na aba *Design*. Criaremos a conexão com o MySQL como feito anteriormente, e aplicamos uma query para seleção os atributos (aqui selectionaremos todos atributos). Como esse passo é comum a todas as dimensões, ele será apresentado apenas um vez:
+
+![inp](https://user-images.githubusercontent.com/63553829/91590431-c9691d80-e931-11ea-8823-7333f457b218.png)
+
+### 1. Dimensão Cliente
+
+A figura a seguir apresenta a visão completa da Dimensão Cliente, e alguns blocos discutidos em detalhe 
+
+![dim_cl1](https://user-images.githubusercontent.com/63553829/91591231-fec23b00-e932-11ea-9075-fdd04f6bd7dd.png)
+
+- Sort rows: ordenação da tabela em função de um atributo, normalmente a chave primária (PK). Entretanto, no caso das tabelas "Regiao" e "Territorio", como iremos aplicar um *Merge* em ambas, elas são ordenadas em função das chaves em comum;
+- Merge join: fundir duas tabelas em função de uma PK. Aqui, realizamos um *LEFT OUTER* Join, isso porque a tabela "Regiao" possui mais IDs que a tabela "Territorio":
+
+![dim_cl3](https://user-images.githubusercontent.com/63553829/91592054-4eedcd00-e934-11ea-84a1-a039fa1f40c5.png)
+
+- Select values: nesse passo, removemos *iDTerritorio*, uma vez que após o *Merge* temos dois IDs para o atributo Territorio:
+
+![dim_cl2](https://user-images.githubusercontent.com/63553829/91591144-d4707d80-e932-11ea-9ff7-426b5387eb02.png)
+
+Após realizar o primeiro *Merge*, aplicamos outro *Sort rows* agora no atributo *iDRegiao*, como no caso do input *Cliente*, passa que possamos realizar o segundo merge *Merge* entre as tabelas "Cliente" e "Regiao"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
