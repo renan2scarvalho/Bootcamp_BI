@@ -16,10 +16,11 @@ Assim, a partir das tabelas de origem, o objetivo é modelar um Data Warehouse (
 
 ## 1. Extração
 
-Agora que já sabemos quais são as tabelas e o esquema proposto, iremos realizar o primeiro passo, que é a criação de uma **staging area**, i.e. criação de uma área temporária e  extração das tabelas para a mesma, a fim de padronizá-las e seguir para o passo de transformação. Portanto, no MySQL Workbench, criamos a base de dados com o código a seguir:
+Agora que já sabemos quais são as tabelas e o esquema proposto, iremos realizar o primeiro passo, que é a criação de uma **staging area**, i.e. criação de uma área temporária e  extração das tabelas para a mesma, a fim de padronizá-las e seguir para o passo de transformação. Portanto, no MySQL Workbench, criamos a base de dados com o código a seguir, no qual também já criaremos a base de dados para o Data Warehouse (DW):
 
 ```javascript
 CREATE DATABASE stg_desafio;
+CREATE DATABASE dw_desafio;
 ```
 
 Agora, com a *staging area* criada, iremos realizar a **extração** das tabelas, iniciando com as extensões *csv* no Pentaho (uma boa prática é realizar a extração de uma tabela individualmente, mas nesse caso iremos realizar a extração agrupada por extensões). Assim, somente devemos digitar *csv* na aba *Design* do Pentaho, e incluir *CSV input* para cada tabela. Aqui, caso queira, é possível adicionar notas clicando com o botão direto na tela um espaço em branco.
@@ -79,23 +80,47 @@ A figura a seguir apresenta a visão completa da Dimensão Cliente, e alguns blo
 
 ![dim_cl1](https://user-images.githubusercontent.com/63553829/91591231-fec23b00-e932-11ea-9075-fdd04f6bd7dd.png)
 
-- Sort rows: ordenação da tabela em função de um atributo, normalmente a chave primária (PK). Entretanto, no caso das tabelas "Regiao" e "Territorio", como iremos aplicar um *Merge* em ambas, elas são ordenadas em função das chaves em comum;
-- Merge join: fundir duas tabelas em função de uma PK. Aqui, realizamos um *LEFT OUTER* Join, isso porque a tabela "Regiao" possui mais IDs que a tabela "Territorio":
+Iniciamos com um *Sort rows"*, o qual realiza a ordenação da tabela em função de um atributo, normalmente a chave primária (PK). Entretanto, no caso das tabelas "Regiao" e "Territorio", como iremos aplicar um *Merge* em ambas, elas são ordenadas em função das chaves em comum. Após, aplicamos um *Merge join* para fundir duas tabelas em função de uma PK. Aqui, realizamos um *LEFT OUTER Join*, isso porque a tabela "Regiao" possui mais IDs que a tabela "Territorio":
 
 ![dim_cl3](https://user-images.githubusercontent.com/63553829/91592054-4eedcd00-e934-11ea-84a1-a039fa1f40c5.png)
 
-- Select values: nesse passo, removemos *iDTerritorio*, uma vez que após o *Merge* temos dois IDs para o atributo Territorio:
+A seguir, aplicamos um *Select values* para removemos o atributo *iDTerritorio*, uma vez que após o *Merge* temos dois IDs para o atributo Territorio:
 
 ![dim_cl2](https://user-images.githubusercontent.com/63553829/91591144-d4707d80-e932-11ea-9ff7-426b5387eb02.png)
 
-Após realizar o primeiro *Merge*, aplicamos outro *Sort rows* agora no atributo *iDRegiao*, como no caso do input *Cliente*, passa que possamos realizar o segundo merge *Merge* entre as tabelas "Cliente" e "Regiao"
+Após realizar o primeiro *Merge*, aplicamos outro *Sort rows* agora no atributo *iDRegiao*, como no caso do input *Cliente*, passa que possamos realizar o segundo merge *Merge* entre as tabelas "Cliente" e "Regiao". Após, ordenamos pelo *iDClientes*, e removemos o atributo *iDRegiao* pois está duplicado:
+
+![dim_cl4](https://user-images.githubusercontent.com/63553829/91592579-20bcbd00-e935-11ea-91f5-5fdacdf32334.png)
+
+Por fim, criaremos a Tabela Dimensão Cliente com o bloco *Dimension Lookup/Update*. Aqui estabelecemos uma nova conxão para a base de dados do **Data Warehouse** *dw_desafio* como realizado outras vezes, damos um nome para a tabela.
+Na aba *Keys* preenchemos o campo dimensão e selecionamos o campo *iDClientes* no fluxo, e abaixo, preenchemos a [*Surrogate Key*](https://en.wikipedia.org/wiki/Surrogate_key) que irá para a Tabela Fato "Vendas", e selecionamos como auto-incremental, e na aba *Fields*, selecionamos os atributos, os quais podem ser selecionados com o botão *Get Fields*.
+
+![dim_cl5](https://user-images.githubusercontent.com/63553829/91593798-2f0bd880-e937-11ea-88ad-f2139da51030.png)
+
+Agora, criamos uma versão para o campo, utilizando uma data alternativa para início. Por fim, temos que criar a tabela que irá ser preenchida. Novamente, podemos criá-la no MySQL Workbench, ou podemos criá-la direto no Pentaho, procedimento o qual feramos. Ao executarmos o passo, uma janela aparecerá, nos dizendo o resultado:
+
+![dim_cl6](https://user-images.githubusercontent.com/63553829/91594179-d557de00-e937-11ea-8332-fab18ff490f1.png)
+
+Caso todos os passos estejam corretos, ao executarmos a **transformação**, assim como o processo de extração, o Pentaho apresenta uma mensagem de *transformação concluída!!*
+
+![dim_cl7](https://user-images.githubusercontent.com/63553829/91594397-3da6bf80-e938-11ea-9af6-bf83f7b4c354.png)
+
+Pronto! Ou quase! Concluímos nossa primeira transformação! Agora iremos para as próximas dimensões.
+
+
+### 2. Dimensão Produto
+
+Agora criaremos a Dimensão Produto. A figura a seguir apresenta o diagrama commpleto.
+
+![dim_prod](https://user-images.githubusercontent.com/63553829/91595087-582d6880-e939-11ea-81fd-7f794b7ed53e.png)
+
+Como anteriormente, ordenamos as tabelas de entrada "Produto" e "Categoria" em função do atributo *iDCategoria* (lembre-se, valor em comum), e aplicamos um *LEFT OUTER Merge Join*. Após, aplicamos um bloco *If field value is null*, que trabalha com valores nulos. A tabela "Categoria" possui valores nulos, que continuaram após
+
+![dim_prod2](https://user-images.githubusercontent.com/63553829/91595876-a0995600-e93a-11ea-87d3-7ca78a714c6c.png)
 
 
 
-
-
-
-
+![dim_prod3](https://user-images.githubusercontent.com/63553829/91596106-071e7400-e93b-11ea-9d6b-b418f3f54100.png)
 
 
 
