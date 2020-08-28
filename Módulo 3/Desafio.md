@@ -48,8 +48,23 @@ E por fim, selectionar os campos na aba *Fields*, através do *Get fields from h
 
 ![ext_excel3](https://user-images.githubusercontent.com/63553829/91578970-4cce4300-e921-11ea-8d20-c8c116bc3c9a.png)
 
-Após adicionar todos os inputs, devemos enviá-los à **staging area**, através de um *Table output*, também facilmente adicionado na aba *Design*. Esse processo é comum a todos os inputs, e, portanto, será demonstrado apenas uma vez. O primeiro passo que devemos realizar é criar uma conecção com nossa base de dados no MySQL
+Após adicionar todos os inputs, devemos enviá-los à **staging area**, através de um *Table output*, também facilmente adicionado na aba *Design*. Esse processo é comum a todos os inputs, e, portanto, será demonstrado apenas uma vez. O primeiro passo que devemos realizar é criar uma nova conexão com nossa base de dados "stg_desafio" no MySQL criada no início. Daremos um nome à conexão para ser partilhada pelos demais inputs, e adicionamos os parâmetros do MySQL (*Host Name, Database Name, Port Number, Username, Password*), e podemos realizar um teste para avaliar se a conexão foi estabelecida:
 
+![sql](https://user-images.githubusercontent.com/63553829/91585346-55774700-e92a-11ea-9de8-98051e5d9346.png)
+
+Agora que conseguimos conectar com nossa *staging area* no MySQL, devemos dar um nome à tabela a ser inserida, e criá-la, onde existem duas possibilidades. A primeira consiste na criação da tabela dentro do próprio Workbench, ou criá-la através do Pentaho, como faremos. Nesse caso, ao clicar no botão "SQL", uma janela com a query necessária para a criação da tabela aparece, e temos que executá-la. Ao final, caso a query tenha sido executada com sucesso, uma nova janela aparecerá com o resultado:
+
+![sql2](https://user-images.githubusercontent.com/63553829/91585961-231a1980-e92b-11ea-92fa-88fbf1d654a3.png)
+
+Enfim, terminamos a programação do processo de **extração** das tabelas, e envio para a *staging area*. O próximo passo é darmos um preview para que possamos ver se existe algum erro no processo. Clicamos com o botão direito em algum dos processos e colocamos *Preview*. Caso nenhum erro tenha sido encontrado, realizaremos o processo através do botão *Run*. Caso o processo tenha sido executado, abaixo temos o aviso de transformação finalizada, como detalhado na figura:
+
+![ext_finish](https://user-images.githubusercontent.com/63553829/91587688-7ee5a200-e92d-11ea-8495-71854715d54e.png)
+
+Caso queira conferir, é possível executar uma query no MySQL Workbench:
+
+```javascript
+SELECT * FROM [TABLE]
+```
 
 
 ## 2. Transformação
