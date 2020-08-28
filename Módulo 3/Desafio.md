@@ -2,7 +2,7 @@
 
 Nesse Desafio o objetivo foi realizar o processo completo do ETL no Pentaho Data Integration (PDI), a partir de sete tabelas *excel* e arquivos *csv*:
 
-![tabelas](https://user-images.githubusercontent.com/63553829/91566283-cd894100-e919-11ea-910d-aa6f59225b61.png){: .mx-auto.d-block :}
+![tabelas](https://user-images.githubusercontent.com/63553829/91566283-cd894100-e919-11ea-910d-aa6f59225b61.png)
 
 Essas tabelas seguem o esquema *snow flake*, como apresentado adiante:
 
@@ -13,6 +13,8 @@ Assim, a partir das tabelas de origem, o objetivo é modelar um Data Warehouse (
 ![star_mdl](https://user-images.githubusercontent.com/63553829/91566611-51dbc400-e91a-11ea-875e-2d944ea62019.png)
 
 ## Agora, ao trabalho!
+
+## 1. Extração
 
 Agora que já sabemos quais são as tabelas e o esquema proposto, iremos realizar o primeiro passo, que é a criação de uma **staging area**, i.e. criação de uma área temporária e  extração das tabelas para a mesma, a fim de padronizá-las e seguir para o passo de transformação. Portanto, no MySQL Workbench, criamos a base de dados com o código a seguir:
 
@@ -46,5 +48,8 @@ E por fim, selectionar os campos na aba *Fields*, através do *Get fields from h
 
 ![ext_excel3](https://user-images.githubusercontent.com/63553829/91578970-4cce4300-e921-11ea-8d20-c8c116bc3c9a.png)
 
+Após adicionar todos os inputs, devemos enviá-los à **staging area**, através de um *Table output*, também facilmente adicionado na aba *Design*. Esse processo é comum a todos os inputs, e, portanto, será demonstrado apenas uma vez. O primeiro passo que devemos realizar é criar uma conecção com nossa base de dados no MySQL
 
 
+
+## 2. Transformação
