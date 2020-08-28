@@ -14,7 +14,7 @@ Assim, a partir das tabelas de origem, o objetivo é modelar um Data Warehouse (
 
 ## Agora, ao trabalho!
 
-## 1. Extração
+## Extração
 
 Agora que já sabemos quais são as tabelas e o esquema proposto, iremos realizar o primeiro passo, que é a criação de uma **staging area**, i.e. criação de uma área temporária e  extração das tabelas para a mesma, a fim de padronizá-las e seguir para o passo de transformação. Portanto, no MySQL Workbench, criamos a base de dados com o código a seguir, no qual também já criaremos a base de dados para o Data Warehouse (DW):
 
@@ -68,7 +68,7 @@ SELECT * FROM [TABLE]
 ```
 
 
-## 2. Transformação
+## Transformação e Carga
 
 As transformações serão realizadas em cada dimensão separadamente. O primeiro passo é inserir as tabelas da *staging area* atraves de um *Table input* na aba *Design*. Criaremos a conexão com o MySQL como feito anteriormente, e aplicamos uma query para seleção os atributos (aqui selectionaremos todos atributos). Como esse passo é comum a todas as dimensões, ele será apresentado apenas um vez:
 
@@ -82,15 +82,15 @@ A figura a seguir apresenta a visão completa da Dimensão Cliente, e alguns blo
 
 Iniciamos com um *Sort rows"*, o qual realiza a ordenação da tabela em função de um atributo, normalmente a chave primária (PK). Entretanto, no caso das tabelas "Regiao" e "Territorio", como iremos aplicar um *Merge* em ambas, elas são ordenadas em função das chaves em comum. Após, aplicamos um *Merge join* para fundir duas tabelas em função de uma PK. Aqui, realizamos um *LEFT OUTER Join*, isso porque a tabela "Regiao" possui mais IDs que a tabela "Territorio":
 
-![dim_cl32](https://user-images.githubusercontent.com/63553829/91592054-4eedcd00-e934-11ea-84a1-a039fa1f40c5.png)
+![dim_cl2](https://user-images.githubusercontent.com/63553829/91592054-4eedcd00-e934-11ea-84a1-a039fa1f40c5.png)
 
 A seguir, aplicamos um *Select values* para removemos o atributo *iDTerritorio*, uma vez que após o *Merge* temos dois IDs para o atributo Territorio:
 
-![dim_cl2](https://user-images.githubusercontent.com/63553829/91591144-d4707d80-e932-11ea-9ff7-426b5387eb02.png)
+![dim_cl3](https://user-images.githubusercontent.com/63553829/91603590-a182b580-e943-11ea-9bbe-8be53010326d.png)
 
 Após realizar o primeiro *Merge*, aplicamos outro *Sort rows* agora no atributo *iDRegiao*, como no caso do input *Cliente*, passa que possamos realizar o segundo merge *Merge* entre as tabelas "Cliente" e "Regiao". Após, ordenamos pelo *iDClientes*, e removemos o atributo *iDRegiao* pois está duplicado:
 
-![dim_cl4](https://user-images.githubusercontent.com/63553829/91592579-20bcbd00-e935-11ea-91f5-5fdacdf32334.png)
+![dim_cl4](https://user-images.githubusercontent.com/63553829/91603748-ed355f00-e943-11ea-93a0-8e4f2241f1ae.png)
 
 Por fim, criaremos a Tabela Dimensão Cliente com o bloco *Dimension Lookup/Update*. Aqui estabelecemos uma nova conxão para a base de dados do **Data Warehouse** *dw_desafio* como realizado outras vezes, damos um nome para a tabela.
 Na aba *Keys* preenchemos o campo dimensão e selecionamos o campo *iDClientes* no fluxo, e abaixo, preenchemos a [*Surrogate Key*](https://en.wikipedia.org/wiki/Surrogate_key) que irá para a Tabela Fato "Vendas", e selecionamos como auto-incremental, e na aba *Fields*, selecionamos os atributos, os quais podem ser selecionados com o botão *Get Fields*.
@@ -101,7 +101,7 @@ Agora, criamos uma versão para o campo, utilizando uma data alternativa para in
 
 ![dim_cl6](https://user-images.githubusercontent.com/63553829/91594179-d557de00-e937-11ea-8332-fab18ff490f1.png)
 
-Caso todos os passos estejam corretos, ao executarmos a **transformação**, assim como o processo de extração, o Pentaho apresenta uma mensagem de *transformação concluída!!*
+Caso todos os passos estejam corretos, ao executarmos a **transformação**, assim como o processo de extração, o Pentaho apresenta uma mensagem de *transformação concluída!!* É importante comentar que ao realizar essa transformação, estamos realizando também a **carga** da dimensão na base de dados do DW, ou seja, aqui realizamos os dois últimos passos do processo de ETL.
 
 ![dim_cl7](https://user-images.githubusercontent.com/63553829/91594397-3da6bf80-e938-11ea-9af6-bf83f7b4c354.png)
 
@@ -122,28 +122,55 @@ Nesse caso, aplicamos então o bloco *If field value is null*, que trabalha com 
 
 ![dim_prod3](https://user-images.githubusercontent.com/63553829/91596106-071e7400-e93b-11ea-9d6b-b418f3f54100.png)
 
-Por fim, removemos o *iDCategoria* (duplicado), e criamos a Dimensão Produto, como feito na Dimensão Cliente. Lembre-se que nesse passo é necessário preencher os campos de chave, chave técnica (SK), campos da tabela, data, e criar a tabela no MySQL. Após feitos estes passos, caso todos estejam corretos, temos a mensagem de êxito da **transformação**:
+Por fim, removemos o *iDCategoria* (duplicado), e criamos a Dimensão Produto, como feito na Dimensão Cliente. Lembre-se que nesse passo é necessário preencher os campos de chave, chave técnica (SK), campos da tabela, data, e criar a tabela no MySQL. Após feitos estes passos, caso todos estejam corretos, temos a mensagem de êxito da **transformação**, sendo realizada também a **carga** da dimensão no DW.
 
 ![dim_prod4](https://user-images.githubusercontent.com/63553829/91601976-eb1dd100-e940-11ea-967b-bfb6f7640969.png)
 
 
 ## 3. Dimensão Funcionário
 
-Neste terceiro passo, criaremos a Dimensão Funcionário, como apresentado no diagrama a seguir. Neste caso, apenas ordenamos o atributo *matFuncionario*, e aplicamos a **transformação**, novamente preenchendo os campos necessários no bloco *Dimension Lookup/Update*:
+Neste terceiro passo, criaremos a Dimensão Funcionário, como apresentado no diagrama a seguir. Neste caso, apenas ordenamos o atributo *matFuncionario*, e aplicamos a **transformação**, novamente preenchendo os campos necessários no bloco *Dimension Lookup/Update*, e realiazmos a **carga** da dimensão no DW:
 
 ![dim_func](https://user-images.githubusercontent.com/63553829/91602657-17861d00-e942-11ea-91c3-d23a300b4226.png)
 
 
 ## 4. Dimensão Data
 
-Todo modelo dimensional deve ter uma Dimensão Data. Aqui, criaremos esta dimensão através de alguns blocos, que ao final, ficará desta maneira:
+Todo modelo dimensional deve ter uma Dimensão Data. Aqui, criaremos esta dimensão do zero, que, ao final, terá o seguinte diagrama:
 
-![dim_data](https://user-images.githubusercontent.com/63553829/91602822-59af5e80-e942-11ea-9ef9-2aa8510ad4c0.png)
+![dim_data](https://user-images.githubusercontent.com/63553829/91607198-e27dc880-e949-11ea-9b93-424e04b18014.png)
+
+Criamos a data inicial com um bloco *Generate rows*, aplicando um limite de 100.000 linhas, dando um nome à variável e um valor inicial, no caso 01/01/2010. Como o valor da data inicial é o mesmo para toda linha, a seguir adicionamos uma sequencia de dias somados a partir da data inicial, com incremento de 1 dia:
+
+![dim_data2](https://user-images.githubusercontent.com/63553829/91605782-62566380-e947-11ea-9fd5-e0cdae4d6ae8.png)
+
+O próximo passo é calcular as diversas datas para a dimensão através de um bloco *Calculator*. Iniciamos preenchendo a primeira linha com a SK da data em função dos blocos anteriores, alterando a *Conversion mask* para dd/MM/yyyy, notação final das datas, e, a seguir, calculamos as demais datas em função da SK criada:
+
+![dim_data3](https://user-images.githubusercontent.com/63553829/91606100-db55bb00-e947-11ea-80dc-627e20875bb9.png)
+
+Criaremos agora strings para as semanas do ano, utilizando o atributo criado no paso anteior e adicionamos "ª Semana":
+
+![dim_data4](https://user-images.githubusercontent.com/63553829/91606475-81092a00-e948-11ea-8331-6b46cb4c5423.png)
+
+A seguir, aplicamos diversos blocos *Value mapper* para adicionarmos colunas em função de atributos existentes, como na figura abaixo:
+
+![dim_data5](https://user-images.githubusercontent.com/63553829/91606877-55d30a80-e949-11ea-8fc0-d9aa4e4d7d18.png)
+
+Por fim, removemos os atributos *DataInicial* e *Dias*, criados no começo do processo, e criamos a Dimensão Data, aplicando os preenchimentos necessários, criando a tabela na base de dados do MySQL, e aplicamos a **transformação** juntamente com a **carga** da dimensão no DW. Esse processo leva um tempo maior que as transformações anteriores, devido aos cálculos realizados na criação da dimensão, em comparação com os processos das demais dimensões que são razoavelmente simples.
+
+![dim_data6](https://user-images.githubusercontent.com/63553829/91607936-10afd800-e94b-11ea-8c3b-5847991f37a0.png)
 
 
-a
+## Fato Vendas
 
+Após tanto trabalho, estamos finalizando nosso processo de ETL e criação do DW. Nos falta apenas a tabela *Fato Vendas*, a qual criaremos de acordo com o seguinte diagrama:
 
+![fato](https://user-images.githubusercontent.com/63553829/91608180-6dab8e00-e94b-11ea-977e-8d3335f1dfcd.png)
+
+Após inserir a tabela "Vendas" da *staging area*, utilizamos blocos *Database lookpu* para buscar as dimensões e adicioná-las à mesma. Aqui utilizamos o join entre PK das dimensões e a tabela fato como lookup, mas retornaremos as SK das dimensões na fato:
+
+![fato2](https://user-images.githubusercontent.com/63553829/91608845-ac8e1380-e94c-11ea-8823-b94af5ad3d6c.png)
+![fato3](https://user-images.githubusercontent.com/63553829/91608946-d810fe00-e94c-11ea-811a-5cf29953aa4b.png)
 
 
 
