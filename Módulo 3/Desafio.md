@@ -2,7 +2,7 @@
 
 Nesse Desafio o objetivo foi realizar o processo completo do ETL no Pentaho Data Integration (PDI), a partir de sete tabelas *excel* e arquivos *csv*:
 
-![tabelas](https://user-images.githubusercontent.com/63553829/91566283-cd894100-e919-11ea-910d-aa6f59225b61.png)
+![tabelas](https://user-images.githubusercontent.com/63553829/91566283-cd894100-e919-11ea-910d-aa6f59225b61.png){: .mx-auto.d-block :}
 
 Essas tabelas seguem o esquema *snow flake*, como apresentado adiante:
 
