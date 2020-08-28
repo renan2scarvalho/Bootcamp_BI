@@ -141,7 +141,7 @@ Todo modelo dimensional deve ter uma Dimensão Data. Aqui, criaremos esta dimens
 ![dim_data](https://user-images.githubusercontent.com/63553829/91602822-59af5e80-e942-11ea-9ef9-2aa8510ad4c0.png)
 
 
-
+a
 
 
 
