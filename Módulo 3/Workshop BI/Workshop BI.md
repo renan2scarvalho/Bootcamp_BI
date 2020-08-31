@@ -1,5 +1,6 @@
 # Workshop BI
 
+O processo de Extração, Transformação e Carga apresentado nesse repositório é o resultado de um Workshop BI.
 A ideia do workshop foi demonstrar de maneira prática e objetiva como transformar um modelo de base transacional (OLTP) em um modelo dimensional (OLAP) para Data Warehouse (DW).O projeto utiliza quatro planilhas em formato *csv* de uma empresa de distribuição de artigos de tecnologia (hardware e software):
 - customer
 - orders
@@ -179,7 +180,7 @@ Nesse ponto, terminamos as **transformações e cargas** das dimensões no DW. A
 
 Após realizarmos a inserção da tabela de vendas advinda da *staging area*, aplicamos o procedimento a seguir para calcular o valor de vendas, e criamos um novo atributo para aplicarmos a padronização da data através da máscara de conversão, removendo a antiga data a seguir:
 
-![fato](https://user-images.githubusercontent.com/63553829/91768847-a39f7b00-ebb4-11ea-87c4-5abef2c6f8d4.png)
+![fato](https://user-images.githubusercontent.com/63553829/91771287-1d396800-ebb9-11ea-94a2-d0e09df96a9d.png)
 
 Agora, iremos inserir as dimensões na pipeline, através de um bloco *Database lookpu*, utilizando a conexão com o DW no MySQL. Aqui realizamos o *lookup* em cima das PKs das dimensões e das FKs na fato, retornando as SKs presentes nas dimensões:
 
@@ -187,4 +188,20 @@ Agora, iremos inserir as dimensões na pipeline, através de um bloco *Database 
 ![fato3](https://user-images.githubusercontent.com/63553829/91770488-9e8ffb00-ebb7-11ea-8953-4664468d0c10.png)
 ![fato4](https://user-images.githubusercontent.com/63553829/91770681-f9c1ed80-ebb7-11ea-97eb-84d3e255c71e.png)
 
+Substituímos os valores nulos nas SKs:
 
+![fato5](https://user-images.githubusercontent.com/63553829/91771366-3f32ea80-ebb9-11ea-803f-76389a1c8adf.png)
+
+E removemos as *IDs* presentes na tabela fato, uma vez que as referentes SKs estão presentes:
+
+![fato6](https://user-images.githubusercontent.com/63553829/91771510-7b664b00-ebb9-11ea-999a-de554c659c65.png)
+
+Por fim, após popularmos a tabela fato, realizamos o procedimento de **carga** da tabela no DW, e finalizamos nosso processo de ETL. Ao executarmos a query a seguir, temos a Tabela Fato Vendas dentro do MySQL Workbench, demonstrando o êxito do processo:
+
+```javascript
+SELECT * FROM fact_sales;
+```
+
+![mysql](https://user-images.githubusercontent.com/63553829/91771809-021b2800-ebba-11ea-8f23-6291d324655d.png)
+
+Nota-se que o processo de **ETL** é trabalhoso, demandando atenção aos detalhes. Aqui aplicamos a extração de acordo com as extensões dos arquivos, mas o ideal seria realizar cada processo de extração, transformação e carga individualmente. Ademais, existe a possibilidade de automatização deste processo através dos Jobs do Pentaho. Entretanto, tais processos, ainda que mais simples, não foram abordados nesse trabalho. 
