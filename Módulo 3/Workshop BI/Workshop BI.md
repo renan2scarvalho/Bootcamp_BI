@@ -25,7 +25,7 @@ O esquema abaixo representa o esquema transacional, onde cada Chave Primária (P
 
 ![trans_sch](https://user-images.githubusercontent.com/63553829/91753039-a8a50000-eb9d-11ea-9bd9-18bfd3425ccb.png)
 
-Adentrando no modelo dimensional, as PK recebem outro nome quando no DW: Chave Substituta (Surrogate Key - SK), a qual nada mais é que uma chave artificial, e existe para manter a integridade das informações de uma dimensão, pois possui as características de uma PK. A PK, quando vem de um banco transacional, é também chamada de *Natural Key* ou *Business Key*. O diagrama estrela do modelo dimensional será o seguinte:
+Adentrando no modelo dimensional, as PK recebem outro nome quando no DW: Chave Substituta (Surrogate Key - SK), a qual nada mais é que uma chave artificial, e existe para manter a integridade das informações de uma dimensão, pois possui as características de uma PK. A PK, quando vem de um banco transacional, é também chamada de *Natural Key* ou *Business Key*. O diagrama estrela do modelo dimensional será o seguinte, abordado mais à frente:
 
 ![star_sch](https://user-images.githubusercontent.com/63553829/91753371-2cf78300-eb9e-11ea-9395-eb857fd85a3b.png)
 
@@ -124,7 +124,7 @@ A Dimensão Promoção possui exatamente a mesma pipeline de extração e carga 
 
 #### 3. Dimensão Consumidor
 
-A Dimensão Consumidor se inicia com uma caixa de ordenação seguida por uma caixa de operações de texto, na qual o atributo *CUST_EMAIL* é passado para caixa baixa:
+A Dimensão Consumidor se inicia com uma caixa de ordenação pela PK *CONSUMER_ID*, seguida por uma caixa de operações de texto, na qual o atributo *CUST_EMAIL* é passado para caixa baixa:
 
 ![dim_cons](https://user-images.githubusercontent.com/63553829/91763740-6a630d00-ebac-11ea-98dd-4e73181525eb.png)
 
@@ -144,13 +144,47 @@ Agora iremos realizar a transformação e carga da Dimensão Representante de Ve
 
 ![dim_sr](https://user-images.githubusercontent.com/63553829/91764602-f9bcf000-ebad-11ea-8d1f-75f1221a28f5.png)
 
-Trocamos o ID_DEPARTMENT para 80
+Trocamos os valores nulos do atributo *ID_DEPARTMENT* para 80 (todos os valores do atributo são 80), aplicamos uma ordenação pela PK *EMPLOYEE_ID*:
 
 ![dim_sr](https://user-images.githubusercontent.com/63553829/91764982-9f705f00-ebae-11ea-96b7-d2ee37a0b5c0.png)
 
+Por fim, após as **transformações** acima, realizamos novamente a **carga** da Dimensão Representanto de Vendas através da caixa *Dimension*, novamente utilizando a mesma conexão com o MySQL que as Dimensões anterioes.
 
+#### 5. Dimensão Data
 
+Nossa última Dimensão é a Data, *sine qua non* para todo modelo dimensional. Nesse caso, criaremos a Dimensão Data do zero, iniciando com uma caixa *Generate rows*, na qual criamos a base para as datas, com nossa dimensão se iniciando em 01/01/1990, e finaliza 100.000 dias após a data de início:
 
+![dim_data](https://user-images.githubusercontent.com/63553829/91766247-a7c99980-ebb0-11ea-8cd1-84b1e105eb85.png)
 
+A seguir, adicionamos uma sequência de dias em função da data inicial, pois a mesma contém 100.000 linhas com o mesmo valor:
+
+![dim_data2](https://user-images.githubusercontent.com/63553829/91766485-0727a980-ebb1-11ea-87f3-bcb3876387f0.png)
+
+Neste terceiro passo, utilizamos uma caixa calculadora para determinar os valores dos atributos que irão popular a tabela fato. Nesse passo é importante se atentar aos Campos A e B, tipo do valor e máscara de conversão:
+
+![dim_data3](https://user-images.githubusercontent.com/63553829/91766606-39390b80-ebb1-11ea-98fb-b383dae3cb1c.png)
+
+A seguir, realizamos uma sequência de mapeamento de valores, nos quais geramos strings para diversos atributos:
+
+![dim_data4](https://user-images.githubusercontent.com/63553829/91767190-26730680-ebb2-11ea-9a63-bfe1fc150f15.png)
+
+Removemos os campos criados no início:
+
+![dim_data5](https://user-images.githubusercontent.com/63553829/91767300-4dc9d380-ebb2-11ea-9bbf-a9a7e9b09b48.png)
+
+Por fim, após a criação dos mais diversos atributos de data, realizamos a **carga** da dimensão no DW.
+Nesse ponto, terminamos as **transformações e cargas** das dimensões no DW. Agora, nos falta um último passo: a tabela fato.
+
+#### 6. Fato Vendas
+
+Após realizarmos a inserção da tabela de vendas advinda da *staging area*, aplicamos o procedimento a seguir para calcular o valor de vendas, e criamos um novo atributo para aplicarmos a padronização da data através da máscara de conversão, removendo a antiga data a seguir:
+
+![fato](https://user-images.githubusercontent.com/63553829/91768847-a39f7b00-ebb4-11ea-87c4-5abef2c6f8d4.png)
+
+Agora, iremos inserir as dimensões na pipeline, através de um bloco *Database lookpu*, utilizando a conexão com o DW no MySQL. Aqui realizamos o *lookup* em cima das PKs das dimensões e das FKs na fato, retornando as SKs presentes nas dimensões:
+
+![fato2](https://user-images.githubusercontent.com/63553829/91770591-d303b700-ebb7-11ea-9435-b11752e4f5d1.png)
+![fato3](https://user-images.githubusercontent.com/63553829/91770488-9e8ffb00-ebb7-11ea-8953-4664468d0c10.png)
+![fato4](https://user-images.githubusercontent.com/63553829/91770681-f9c1ed80-ebb7-11ea-97eb-84d3e255c71e.png)
 
 
