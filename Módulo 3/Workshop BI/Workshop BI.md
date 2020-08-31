@@ -198,10 +198,6 @@ E removemos as *IDs* presentes na tabela fato, uma vez que as referentes SKs est
 
 Por fim, após popularmos a tabela fato, realizamos o procedimento de **carga** da tabela no DW, e finalizamos nosso processo de ETL. Ao executarmos a query a seguir, temos a Tabela Fato Vendas dentro do MySQL Workbench, demonstrando o êxito do processo:
 
-```javascript
-SELECT * FROM fact_sales;
-```
-
 ![mysql](https://user-images.githubusercontent.com/63553829/91771809-021b2800-ebba-11ea-8f23-6291d324655d.png)
 
 Nota-se que o processo de **ETL** é trabalhoso, demandando atenção aos detalhes. Aqui aplicamos a extração de acordo com as extensões dos arquivos, mas o ideal seria realizar cada processo de extração, transformação e carga individualmente. Ademais, existe a possibilidade de automatização deste processo através dos Jobs do Pentaho. Entretanto, tais processos, ainda que mais simples, não foram abordados nesse trabalho. 
