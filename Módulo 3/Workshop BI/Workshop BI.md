@@ -1,7 +1,7 @@
 # Workshop BI
 
 O processo de Extração, Transformação e Carga apresentado nesse repositório é o resultado de um Workshop BI.
-A ideia do workshop foi demonstrar de maneira prática e objetiva como transformar um modelo de base transacional (OLTP) em um modelo dimensional (OLAP) para Data Warehouse (DW).O projeto utiliza quatro planilhas em formato *csv* de uma empresa de distribuição de artigos de tecnologia (hardware e software):
+A ideia do workshop foi demonstrar de maneira prática e objetiva como transformar um modelo de base transacional (OLTP) em um modelo dimensional (OLAP) para Data Warehouse (DW). O projeto utiliza quatro planilhas em formato *csv* de uma empresa de distribuição de artigos de tecnologia (hardware e software):
 - customer
 - orders
 - products
@@ -20,9 +20,9 @@ As ferramentas utilizadas para esse processo ETL e criação de DW foram o Penta
 
 ### 1. Modelo Transacional e Dimensional
 
-O daataset consiste em um esquema clássico de varejo, com uma lista de produtos oferecidos pela empresa, os quais se enquadram em hierarquias e categorias.
+O dataset consiste em um esquema clássico de varejo, com uma lista de produtos oferecidos pela empresa, os quais se enquadram em hierarquias e categorias.
 Um pedido é constituído por vários itens, e é atrelado a um representante de vendas, e também pode estar atrelado a uma promoção.
-O esquema abaixo representa o esquema transacional, onde cada Chave Primária (Primary Key - PK) são responsáveis pela identificação única de cada item, enquanto as Chaves Estrangeiras (Foreign Key - FK) são responsáveis por ligar as tabelas.
+O esquema abaixo representa o esquema transacional, onde cada Chave Primária (Primary Key - PK) é responsável pela identificação única de cada item, enquanto as Chaves Estrangeiras (Foreign Key - FK) são responsáveis por ligar as tabelas.
 
 ![trans_sch](https://user-images.githubusercontent.com/63553829/91753039-a8a50000-eb9d-11ea-9bd9-18bfd3425ccb.png)
 
@@ -37,7 +37,7 @@ A *staging area* consiste na criação de uma área temporária e de extração 
 Como agora é o momento de fazer todo o tratamento e junções dos dados, podemos presumir que isto exigirá um bom custo de processamento dos dados. Processamento este que se fosse feito diretamente nos bancos de origem, provavelmente afetaria a performance dos sistemas de produção, pois exige bastante recurso computacional. Outro motivo é que em muitos casos é necessário cruzar informações existentes em bancos fisicamente separados, então a *staging area* deixa as tabelas no mesmo local para tal cruzamento.
 A staging area nada mais é do que um banco relacional que serve de repositório para as informações extraídas do banco transacional para que possam ser trabalhos e tratados. Potanto, sua criação é realizada no MySQL, SGBD escolhido para esse trabalho:
 
-```jaavscript
+```javascript
 CREATE DATABASE stg_workshopbi;
 ```
 
