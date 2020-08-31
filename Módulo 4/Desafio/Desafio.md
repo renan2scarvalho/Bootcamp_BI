@@ -5,7 +5,7 @@
 O Desafio visou exercitar os seguintes conceitos:
 - Dashboards;
 - Métricas, KPIs e outras medidas em dashboards;
-- [Conceitos da Gestalt](https://pt.wikipedia.org/wiki/Gestalt#:~:text=A%20gestalt%20(gu%C3%A8s)%20(do,%2C%20antes%2C%20compreender%20o%20todo.);
+- [Conceitos da Gestalt](https://en.wikipedia.org/wiki/Gestalt_psychology);
 - Saturação;
 - Visual eficiente para dashboards.
 
