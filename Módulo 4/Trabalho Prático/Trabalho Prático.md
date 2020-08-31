@@ -1,5 +1,7 @@
 # Ferramentas e Visualizações
 
+## Trabalho Prático
+
 O Trabalho Prático visou exercitar os seguintes conceitos:
 - Dashboards;
 - Métricas, KPIs e outras medidas usando Dashboards;
