@@ -116,3 +116,41 @@ Após realizados todos os procedimentos anteriores, podemos executar a pipeline 
 
 Acabamos de realizar a primeira **transformação e carga** da primeira dimensão de nosso modelo relacional!
 
+#### 2. Dimensão Promoção
+
+A Dimensão Promoção possui exatamente a mesma pipeline de extração e carga da Dimensão Produto e, por isso, não será abordada com maior escrutínio.
+
+![dim_prom](https://user-images.githubusercontent.com/63553829/91762478-c8432500-ebab-11ea-9536-be89ed7c35cc.png)
+
+#### 3. Dimensão Consumidor
+
+A Dimensão Consumidor se inicia com uma caixa de ordenação seguida por uma caixa de operações de texto, na qual o atributo *CUST_EMAIL* é passado para caixa baixa:
+
+![dim_cons](https://user-images.githubusercontent.com/63553829/91763740-6a630d00-ebac-11ea-98dd-4e73181525eb.png)
+
+A seguir, substituímos valores nulos de alguns atributos importantes com a caixa *If field value is null*:
+
+![dim_cons2](https://user-images.githubusercontent.com/63553829/91763863-9e3e3280-ebac-11ea-9f5f-f837ecad1af4.png)
+
+E selecionamos os atributos necessários de acordo com nossa visão de negócio:
+
+![dim_cons3](https://user-images.githubusercontent.com/63553829/91764100-16a4f380-ebad-11ea-931f-ca737ff0294c.png)
+
+Após essas *transformações*, podemos popular a tabela fato através da caixa dimensão, a qual deve ser preenchida como apresentado na Dimensão Produto, utilizando a mesma conexão com o MySQL. Ao final, teremos realizado nossa terceira **transformação e carga**.
+
+#### 4. Dimensão Representante de Vendas
+
+Agora iremos realizar a transformação e carga da Dimensão Representante de Vendas. Nesse caso, antes de ordenarmos, devemos realizar uma filtragem. Isso porque, quando aplicamos uma visualização dos dados, temos um *EMPLOYEE_ID* com valor nulo na primeira linha. Iniciamos, portanto, filtrando tal valor com uma caixa *Filter rows* aplicada a tal atributo, direcionando ao próximo passo do diagrama quando os valores são Falsos, i.e. quando *EMPLOYEE_ID* não é 0, e direcionando os valores iguais a 0 para uma caixa *Dummy*, a qual não realiza nada:
+
+![dim_sr](https://user-images.githubusercontent.com/63553829/91764602-f9bcf000-ebad-11ea-8d1f-75f1221a28f5.png)
+
+Trocamos o ID_DEPARTMENT para 80
+
+![dim_sr](https://user-images.githubusercontent.com/63553829/91764982-9f705f00-ebae-11ea-96b7-d2ee37a0b5c0.png)
+
+
+
+
+
+
+
