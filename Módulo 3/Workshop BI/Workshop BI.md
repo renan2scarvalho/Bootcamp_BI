@@ -68,7 +68,7 @@ Agora, quando executamos a extração, o processe terá êxito:
 Pronto! Um passo foi dado: realizamos a **extração!** Caso queira, é possível executar uma query rapidamente no MySQL para ver o êxito da extração:
 
 ```javascript
-SELECT * FROM TABLE
+SELECT * FROM table
 ```
 
 
