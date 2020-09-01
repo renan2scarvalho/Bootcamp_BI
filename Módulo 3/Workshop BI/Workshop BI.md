@@ -69,13 +69,13 @@ Agora, quando executamos a extração, o processe terá êxito:
 Pronto! Um passo foi dado: realizamos a **extração!** Caso queira, é possível executar uma query rapidamente no MySQL para ver o êxito da extração:
 
 ```javascript
-SELECT * FROM table
+SELECT * FROM table;
 ```
 
 
 ### 3. Transformação para Adequação
 
-Aplicaremos a visão de negócio (**sempre!**) para este caso para implementarmos o modelo dimensional. Os arquivos compreendem o banco transacional de uma empresa. Aplicando a técnica 5W2H já é possível ter uma visão geográfica, financeira, comportamental e temporal:
+Aplicaremos a visão de negócio (**sempre!**) para este caso para implementarmos o modelo dimensional. Aplicando a técnica 5W2H já é possível ter uma visão geográfica, financeira, comportamental e temporal:
 - (Who) Quem são os clientes?
 - (What) O que eles compram?
 - (Where) De onde eles compram?
@@ -88,14 +88,14 @@ Agora aplicaremos, portanto, as transformações necessárias em cada dimensão 
 
 #### 1. Dimensão Produto
 
-Iniciaremos com a Dimensão Produto, que é uma das mais simples de ser realizada, consistindo apenas em inserir a tabela utilizando a mesma conexão com o MMySQL anterior, e organizar as linhas de acordo com a PK *PRODUCT_ID*:
+Iniciaremos com a Dimensão Produto, que é uma das mais simples de ser realizada, consistindo apenas em inserir a tabela utilizando a mesma conexão com o MySQL *staging area* anterior, e organizar as linhas de acordo com a PK *PRODUCT_ID*:
 
 ![dim_prod](https://user-images.githubusercontent.com/63553829/91759318-d98a3280-eba7-11ea-91d2-725d97dbb5c5.png)
 
 Agora, após essa simples **transformação**, iremos realizar a **carga** da tabela no DW. Entretanto, ainda devemos criar o DW, executando o seguinte código no MySQL:
 
 ```javascript
-CREATE DATABASE dw_workshopbi
+CREATE DATABASE dw_workshopbi;
 ```
 
 A seguir, adicionamos o bloco *Dimension lookup/update*, e criamos uma nova conexão com DW no MySQL (lembre-se de testar a conexão):
@@ -115,11 +115,11 @@ Após realizados todos os procedimentos anteriores, podemos executar a pipeline 
 
 ![dim_prod5](https://user-images.githubusercontent.com/63553829/91760779-54544d00-ebaa-11ea-95f5-9014f57d6e90.png)
 
-Acabamos de realizar a primeira **transformação e carga** da primeira dimensão de nosso modelo relacional!
+Acabamos de realizar a primeira **transformação e carga** da primeira dimensão de nosso modelo dimensional!
 
 #### 2. Dimensão Promoção
 
-A Dimensão Promoção possui exatamente a mesma pipeline de extração e carga da Dimensão Produto e, por isso, não será abordada com maior escrutínio.
+A Dimensão Promoção possui exatamente a mesma pipeline de extração e carga da Dimensão Produto e, por isso, não será abordada com maior escrutínio. Apenas lembre-se de ordenar pela PK.
 
 ![dim_prom](https://user-images.githubusercontent.com/63553829/91762478-c8432500-ebab-11ea-9536-be89ed7c35cc.png)
 
