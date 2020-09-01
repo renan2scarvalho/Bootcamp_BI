@@ -182,7 +182,7 @@ Após realizarmos a inserção da tabela de vendas advinda da *staging area*, ap
 
 ![fato](https://user-images.githubusercontent.com/63553829/91771287-1d396800-ebb9-11ea-94a2-d0e09df96a9d.png)
 
-Agora, iremos inserir as dimensões na pipeline, através de um bloco *Database lookpu*, utilizando a conexão com o DW no MySQL. Aqui realizamos o *lookup* em cima das PKs das dimensões e das FKs na fato, retornando as SKs presentes nas dimensões:
+Agora, iremos inserir as dimensões na pipeline, através de um bloco *Database lookup*, utilizando a conexão com o DW no MySQL. Aqui realizamos o *lookup* em cima das PKs das dimensões e das FKs na fato, retornando as SKs presentes nas dimensões:
 
 ![fato2](https://user-images.githubusercontent.com/63553829/91770591-d303b700-ebb7-11ea-9435-b11752e4f5d1.png)
 ![fato3](https://user-images.githubusercontent.com/63553829/91770488-9e8ffb00-ebb7-11ea-8953-4664468d0c10.png)
