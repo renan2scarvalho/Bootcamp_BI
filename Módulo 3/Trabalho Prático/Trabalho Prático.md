@@ -58,7 +58,7 @@ Agora, após selecionados os campos, organizamos os mesmos a partir do "Código 
 Agora teremos nosso primeiro output: o arquivo *txt*. Aqui, selecionamos o diretório para o output, e na aba *Fields* selecionamos os campos através deo botão *Get fields*:
 
 ![txt](https://user-images.githubusercontent.com/63553829/92391671-78a4b200-f0f3-11ea-9c22-9738a60feeb8.png)
-![txt2](https://user-images.githubusercontent.com/63553829/92391855-bf92a780-f0f3-11ea-9779-2026a6e09f54.png)
+![txt2](https://user-images.githubusercontent.com/63553829/92396199-01731c00-f0fb-11ea-8033-d4828af3df8f.png)
 
 Esta mesma tabela será também adicionada ao MySQL. Assim, aqui teremos que configurar nossa conexão com o MySQL com uma base de dados já criada, e, caso a tabela ainda não tenha sido criada, devemos criá-la:
 
