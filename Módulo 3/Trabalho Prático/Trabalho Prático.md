@@ -11,3 +11,6 @@ Essa avaliação tem como objetivo a certificação da qualidade da pós-gradua�
 do conhecimento. Ela é orientada pela Diretoria de Avaliação/CAPES, e realizada com a participação da comunidade acadêmico-científica por meio de consultores ad hoc. 
 Tem como pilares a formação pós-graduada de docentes para todos os níveis de ensino e de profissionais de recursos humanos qualificados para o mercado, bem como o 
 fortalecimento das bases científicas, tecnológicas e de inovação.
+
+<img src="https://user-images.githubusercontent.com/63553829/92388434-a71f8e80-f0ed-11ea-98d2-8e66e7b065e7.png" align="center">
+
