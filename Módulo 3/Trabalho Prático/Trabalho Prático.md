@@ -49,7 +49,7 @@ Adicionamos, então, uma caixa *Dummy* para cuidar deste erro:
 
 Nosso próximo passo é selecionar os campos desejados, uma vez que para o resultado final, não são necessários todos os campos. Então utilizamos uma caixa *Select fields* para tal fim, selecionando os campos a seguir, modificando o nome do "Código IES":
 
-![select](https://user-images.githubusercontent.com/63553829/92391274-b9e89200-f0f2-11ea-9a28-354377e6a9f9.png)
+![select](https://user-images.githubusercontent.com/63553829/92395956-975a7700-f0fa-11ea-8d5c-5b2edfa288a8.png)
 
 Agora, após selecionados os campos, organizamos os mesmos a partir do "Código IES", e selecionamos os campos únicos, para não termos repetições:
 
