@@ -57,3 +57,7 @@ Como comentado no início, o desahboard consiste em vendas entre os anos de 2011
 - Pedidos Anuais:
   - O número de pedidos anuais tem uma tendência sazonal de alta em Junho, redução até Agosto, e nova alta até o fim do ano. Essa tendência é importante caso sejam necessárias contratações de funcionários temporários para suprir a demanda. O início de todos os anos possui menor demanda, como comentado em relação ao lucro anual.
   
+## Recomendações:
+
+- Em relação às sazonalidades e baixas de vendas, seria neecessária uma análise mais detalhada, mas talvez promoções (maiores discontos) seguindo essa sazonalidade ajuda a aumentar o volume de vendas e consequente lucro em períodos fracos.
+- Em relação às avaliações, seria interessante analisar com maior escrutínio as variações dos países, não somente dos 5 com maior lucro. É necessário tentar estabelecer uma correlação entre algum parâmetro e tanto o aumento do número de vendas, quanto principalmente o aumento do número de feecbacks e feedbacks positivos.
