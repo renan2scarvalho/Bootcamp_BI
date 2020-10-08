@@ -10,6 +10,8 @@ O Bootcamp foi segmentador em:
 5. Relatórios e Dashboards
 6. Desafios e Trabalhos Práticos
 
+-----
+
 # Bootcamp "BI Developer"
 The Bootcamp is offered by the Management and Iformation Technology Institute (IGTI), and is divided into:
 1. BI Introduction
