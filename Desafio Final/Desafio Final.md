@@ -6,6 +6,8 @@ O Desafio Final do Bootcamp consistiu em aplicar todo o conhecimento adquirido a
 - Processo ETL;
 - Relatórios e Dashboards.
 
+----
+
 ## O trabalho
 
 O trabalho trata de uma empresa que vende mobílias e material de escritório. Os dados contém vendas entre os anos de 2011 e 2014, e o principal objetivo do trabalho é criar um dashboard para auxiliar a alta gestão na tomada de decisão.
@@ -25,6 +27,7 @@ O primeiro passo é, portanto, realizar a conexão do PBI com o MySQL para inser
 
 O relatório final pode ser encontrado no [link](https://app.powerbi.com/view?r=eyJrIjoiMjFlZTE3NWQtZWMwNi00MTI3LWIzMzMtYzgwNzdiYjEwMzg1IiwidCI6IjdlOTNlMjg2LWIyOWEtNDQ1NC1hNDFhLWU4NDE5ZWM5ZGViNSJ9&pageName=ReportSection)
 
+----
 
 ## Highlights:
 
@@ -56,7 +59,9 @@ Como comentado no início, o desahboard consiste em vendas entre os anos de 2011
   
 - Pedidos Anuais:
   - O número de pedidos anuais tem uma tendência sazonal de alta em Junho, redução até Agosto, e nova alta até o fim do ano. Essa tendência é importante caso sejam necessárias contratações de funcionários temporários para suprir a demanda. O início de todos os anos possui menor demanda, como comentado em relação ao lucro anual.
-  
+
+----
+
 ## Recomendações:
 
 - Em relação às sazonalidades e baixas de vendas, seria neecessária uma análise mais detalhada, mas talvez promoções (maiores discontos) seguindo essa sazonalidade ajuda a aumentar o volume de vendas e consequente lucro em períodos fracos.
