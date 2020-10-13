@@ -24,7 +24,9 @@ O primeiro passo é, portanto, desnormalizar as tabelas visando alcançar um mod
 
 ![etl](https://user-images.githubusercontent.com/63553829/95862162-dd79aa80-0d38-11eb-97b8-8447268812dc.png)
 
-O relatório final pode ser encontrado no [link](https://app.powerbi.com/view?r=eyJrIjoiMjFlZTE3NWQtZWMwNi00MTI3LWIzMzMtYzgwNzdiYjEwMzg1IiwidCI6IjdlOTNlMjg2LWIyOWEtNDQ1NC1hNDFhLWU4NDE5ZWM5ZGViNSJ9&pageName=ReportSection)
+O relatório final pode ser encontrado no [link]https://app.powerbi.com/view?r=eyJrIjoiOThlYjMyNGYtMTM0OC00YTc2LWJmZjItOTQ3OTI2MDY5YTZhIiwidCI6IjdlOTNlMjg2LWIyOWEtNDQ1NC1hNDFhLWU4NDE5ZWM5ZGViNSJ9), ou também ser acessado no seguinte QR code para dispositivos móveis:
+
+![QR](https://user-images.githubusercontent.com/63553829/95868059-3993fd00-0d40-11eb-99de-172bac8d3180.jpg)
 
 ----
 
