@@ -20,10 +20,9 @@ E utilizado um arquivo *csv* com a avaliação dos clientes:
 
 ![rating](https://user-images.githubusercontent.com/63553829/92404218-6766a000-f109-11ea-9a7b-d1898655a61e.png)
 
-Com o modelo relacional já pronto, iremos ao Power BI Desktop para realizarmos um relatório de vendas.
-O primeiro passo é, portanto, realizar a conexão do PBI com o MySQL para inserirmos as tabelas do modelo *snowflake*. Após, adicionamos a tabela *ratings*. Aqui, entretanto, temos que realizar algumas transformações, uma vez que os valores possuem aspas duplas duplicadas. Após solucionarmos essa simples transformação, os relacionamentos no PBI ficam da seguinte maneira:
+O primeiro passo é, portanto, desnormalizar as tabelas visando alcançar um modelo *star schema*, o qual possui melhor eficiência. Para tal, foi utiliza a ferramente **Pentaho**, realizando a extração e transformação de algumas das tabelas, e criação do DW no ambiente MySQL. Após tal execução, os relacionamentos no PBI ficam da seguinte maneira:
 
-![pbi](https://user-images.githubusercontent.com/63553829/92509023-f5ad5580-f1df-11ea-8fbb-316f93af1ed9.png)
+![etl](https://user-images.githubusercontent.com/63553829/95862162-dd79aa80-0d38-11eb-97b8-8447268812dc.png)
 
 O relatório final pode ser encontrado no [link](https://app.powerbi.com/view?r=eyJrIjoiMjFlZTE3NWQtZWMwNi00MTI3LWIzMzMtYzgwNzdiYjEwMzg1IiwidCI6IjdlOTNlMjg2LWIyOWEtNDQ1NC1hNDFhLWU4NDE5ZWM5ZGViNSJ9&pageName=ReportSection)
 
